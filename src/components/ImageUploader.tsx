@@ -7,7 +7,7 @@ interface ImageUploaderProps {
   onImageUpload: (image: ImageFile) => void;
 }
 
-export function ImageUploader({ onImageUpload }: ImageUploaderProps) {
+const ImageUploader = ({ onImageUpload }: ImageUploaderProps) => {
   const onDrop = useCallback((acceptedFiles: File[]) => {
     if (acceptedFiles.length > 0) {
       const file = acceptedFiles[0];
@@ -29,8 +29,9 @@ export function ImageUploader({ onImageUpload }: ImageUploaderProps) {
   return (
     <div
       {...getRootProps()}
-      className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors
+      className={`border-4 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors w-full flex flex-col justify-center
         ${isDragActive ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-blue-400'}`}
+      style={{ height: '30rem' }}
     >
       <input {...getInputProps()} />
       <ImageUp className="mx-auto h-12 w-12 text-gray-400" />
@@ -44,4 +45,6 @@ export function ImageUploader({ onImageUpload }: ImageUploaderProps) {
       </p>
     </div>
   );
-}
+};
+
+export default ImageUploader;

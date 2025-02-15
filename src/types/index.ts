@@ -1,5 +1,5 @@
 export interface Caption {
-  text: string;
+  text: string[];
   timestamp: Date;
 }
 

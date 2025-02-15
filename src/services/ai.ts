@@ -22,7 +22,7 @@ export async function generateCaption(imageBase64: string): Promise<string> {
 
     // Generate content using Gemini Vision
     const result = await visionModel.generateContent([
-      "Generate atleast 5 creative and poetic caption for this image. Make it engaging and unique, focusing on the artistic elements and emotional impact. Include few emojis and hashtags. List the outputs in the following schema: ['caption1', 'caption2']",
+      "Generate atleast 5 creative and poetic caption for this image. Make it engaging and unique, focusing on the artistic elements and emotional impact. Include few emojis and hashtags. List the outputs in the following schema: ['caption1', 'caption2']. Do not include any additional keyword such as json or python etc and the structure should start with '[' and end with ']'",
       imageData,
     ]);
 
