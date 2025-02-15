@@ -1,7 +1,7 @@
 import { visionModel } from "../config/gemini";
 import { getImageMimeType } from "../utils/image";
 
-export async function generateCaption(imageBase64: string): Promise<string> {
+export async function generateCaption(imageBase64: string, captionStyle: string): Promise<string> {
   try {
     // Validate the base64 string
     if (!imageBase64.includes("base64,")) {
@@ -22,7 +22,7 @@ export async function generateCaption(imageBase64: string): Promise<string> {
 
     // Generate content using Gemini Vision
     const result = await visionModel.generateContent([
-      "Generate atleast 5 creative and poetic caption for this image. Make it engaging and unique, focusing on the artistic elements and emotional impact. Include few emojis and hashtags. List the outputs in the following schema: ['caption1', 'caption2']. Do not include any additional keyword such as json or python etc and the structure should start with '[' and end with ']'",
+      `Generate atleast 5 ${captionStyle} caption for this image. Make it engaging and unique, focusing on the artistic elements and emotional impact. Include few emojis and hashtags. List the outputs in the following schema: ['caption1', 'caption2']. Do not include any additional keyword such as json or python etc and the structure should start with '[' and end with ']'`,
       imageData,
     ]);
 

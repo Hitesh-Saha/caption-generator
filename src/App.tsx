@@ -14,14 +14,16 @@ const App = () => {
   const [caption, setCaption] = useState<Caption | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [captionStyle, setCaptionStyle] = useState<string>('creative');
 
   const handleImageUpload = async (imageFile: ImageFile) => {
     setImage(imageFile);
     setError(null);
     setCaption(null);
+    setCaptionStyle('creative');
   };
 
-  const handleClick = async () => {
+  const onGenerateClick = async () => {
     setIsLoading(true);
     try {
       if (!validateImageFile((image as ImageFile).file)) {
@@ -29,7 +31,7 @@ const App = () => {
       }
 
       const base64Image = await fileToBase64((image as ImageFile).file);
-      const generatedCaption = await generateCaption(base64Image);
+      const generatedCaption = await generateCaption(base64Image, captionStyle);
       
       setCaption({
         text: JSON.parse((generatedCaption.match(/\[([\s\S]*?)\]/)?.[0] || "[]").replace(/'/g, '"')),
@@ -44,12 +46,16 @@ const App = () => {
     }
   };
 
-  const handleCancel = () => {
+  const onCancelUpload = () => {
     setImage(null);
     setError(null);
     setCaption(null);
+    setCaptionStyle('creative');
   };
 
+  const onCaptionStyleChange = (style: string) => {
+    setCaptionStyle(style);
+  }
   return (
     <>
       <div className="min-h-screen bg-gray-100 flex flex-col justify-between">
@@ -77,7 +83,7 @@ const App = () => {
 
               {image && !error && (
                 <>
-                  <ImagePreviewer url={image.preview} handleCancel={handleCancel} handleClick={handleClick}/>
+                  <ImagePreviewer url={image.preview} captionStyle={captionStyle} handleCancel={onCancelUpload} handleClick={onGenerateClick} handleChange={onCaptionStyleChange} />
                   <CaptionDisplay caption={caption} isLoading={isLoading} />
                 </>
               )}
