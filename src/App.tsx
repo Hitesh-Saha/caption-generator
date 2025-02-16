@@ -15,12 +15,15 @@ const App = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [captionStyle, setCaptionStyle] = useState<string>('creative');
+  const [imageLoader, setImageLoader] = useState<boolean>(false);
 
   const handleImageUpload = async (imageFile: ImageFile) => {
+    setImageLoader(true);
     setImage(imageFile);
     setError(null);
     setCaption(null);
     setCaptionStyle('creative');
+    setImageLoader(false);
   };
 
   const onGenerateClick = async () => {
@@ -83,7 +86,7 @@ const App = () => {
 
               {image && !error && (
                 <>
-                  <ImagePreviewer url={image.preview} captionStyle={captionStyle} handleCancel={onCancelUpload} handleClick={onGenerateClick} handleChange={onCaptionStyleChange} />
+                  <ImagePreviewer url={image.preview} loader={imageLoader} captionStyle={captionStyle} handleCancel={onCancelUpload} handleClick={onGenerateClick} handleChange={onCaptionStyleChange} />
                   <CaptionDisplay caption={caption} isLoading={isLoading} />
                 </>
               )}
